@@ -6,7 +6,7 @@ import App from "./components/app";
 
 export default async function Home() {
   return (
-    <div className="">
+    <div className="mt-6 my-6">
       <Head>
         <meta name="description" content="Movie Search" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

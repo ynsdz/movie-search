@@ -1,24 +1,52 @@
-import React from "react";
+"use client";
 import { CiSearch } from "react-icons/ci";
+import { GoArrowRight } from "react-icons/go";
+import React, { useContext } from "react";
+import { AppContext } from "../app";
+import { useRouter } from "next/navigation";
 
 function InputBar() {
+  const { searchValue, setSearchValue } = useContext(AppContext);
+  const router = useRouter();
+
   return (
-    <div className="mb-3 md:w-96 mx-auto">
-      <div className="relative mb-4 flex w-full flex-wrap items-stretch">
+    <div className="flex justify-center mb-8 items-center">
+      <form
+        className="relative w-full"
+        onSubmit={() => {
+          router.push(`/search?searchKeyword=${searchValue}`);
+        }}
+      >
         <input
-          type="search"
-          className="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+          className="border border-gray-300 pr-10 pl-4 py-2 rounded-lg  w-full"
+          type="input"
+          value={searchValue}
+          onChange={(e) => {
+            setSearchValue(e.target.value);
+          }}
           placeholder="Bir film adi giriniz"
           aria-label="Search"
-          aria-describedby="button-addon3"
         />
-
-        <CiSearch
-          className="relative z-[2] rounded-r border-2 border-primary px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
-          type="button"
-          id="button-addon3"
-        />
-      </div>
+        <div
+          className="absolute inset-y-0 right-0 pr-3  
+                    flex items-center
+                    pointer-events-none"
+        >
+          <button
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault;
+            }}
+            className="cursor-pointer"
+          >
+            {searchValue ? (
+              <GoArrowRight className="fill-sky-500" />
+            ) : (
+              <CiSearch id="button-addon3 " className="fill-sky-500" />
+            )}
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
