@@ -35,9 +35,9 @@ function InputBar() {
         >
           <button type="submit" className="cursor-pointer">
             {searchValue ? (
-              <GoArrowRight className="fill-sky-500" />
+              <GoArrowRight className="fill-sky-500  pointer-events-auto" />
             ) : (
-              <CiSearch id="button-addon3 " className="fill-sky-500" />
+              <CiSearch id="button-addon3 " className="fill-sky-500 " />
             )}
           </button>
         </div>
