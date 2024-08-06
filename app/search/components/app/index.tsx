@@ -70,6 +70,7 @@ function App(props: Props) {
   };
 
   const getData = async () => {
+    console.log("searchvalue", searchValue);
     providerValue.getAndSetMovies(searchValue.trim());
   };
   const debouncedGetData = useDebouncer(() => {
@@ -84,7 +85,7 @@ function App(props: Props) {
 
   return (
     <AppContext.Provider value={providerValue}>
-      <main className="flex flex-col bg-[#F7F9FD] m-16 overflow-hidden">
+      <main className="flex flex-col bg-[#F7F9FD] m-16 overflow-hidden ">
         <ResultHeader searchKeyword={searchValue} resultCount={movies.length} />
         <Movies movies={movies} />
       </main>

@@ -24,7 +24,7 @@ function Movies(props: Props) {
         ))}
       </ul>
       <footer className="border-t flex justify-center align-center">
-        <button className="text-blue-500 py-4 px-8  block w-full text-center">
+        <button className="text-blue-500 py-4 px-8  block w-full text-center ">
           Basa Don
         </button>
       </footer>

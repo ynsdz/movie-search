@@ -11,6 +11,11 @@ type Props = {
   movie: MovieSearchType;
 };
 
+const makeBold = (item: any, keyword: any) => {
+  var re = new RegExp(keyword, "m");
+  return item.replace(re, "<i>" + keyword + "</i>");
+};
+
 function MovieCard(props: Props) {
   const { getMovie, searchValue } = useContext(AppContext);
   const [movieDetail, setMovieDetail] = useState<null | MovieSearchResult>(

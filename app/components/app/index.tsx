@@ -14,10 +14,7 @@ type AppContextType = {
 };
 
 const AppContextInitialValue = {
-  // searchValue: "",
   setSearchValue: (value: string) => {},
-
-  // movies: [],
   getMovie: async (id: string) => {
     return {} as MovieSearchResult;
   },

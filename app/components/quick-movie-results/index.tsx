@@ -15,7 +15,7 @@ function Movies(props: Props) {
   const { searchValue } = useContext(AppContext);
 
   return (
-    <div className="max-w-[570px] bg-white rounded-lg pt-8 shadow">
+    <div className="max-w-[570px] bg-white rounded-lg pt-8 shadow ">
       <ul className="grid grid-cols-1 gap-8 px-8">
         {movies?.map((movie, index) => (
           <MovieCard
