@@ -72,7 +72,6 @@ function App(props: Props) {
   useEffect(() => {
     debouncedGetData();
   }, [searchValue]);
-
   return (
     <AppContext.Provider value={providerValue}>
       <section className="m-8 bg-[#F7F9FD] p-12 ">

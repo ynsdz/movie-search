@@ -13,7 +13,8 @@ function InputBar() {
     <div className="flex justify-center mb-8 items-center">
       <form
         className="relative w-full"
-        onSubmit={() => {
+        onSubmit={(e) => {
+          e.preventDefault();
           router.push(`/search?searchKeyword=${searchValue}`);
         }}
       >
@@ -32,13 +33,7 @@ function InputBar() {
                     flex items-center
                     pointer-events-none"
         >
-          <button
-            type="submit"
-            onClick={(e) => {
-              e.preventDefault;
-            }}
-            className="cursor-pointer"
-          >
+          <button type="submit" className="cursor-pointer">
             {searchValue ? (
               <GoArrowRight className="fill-sky-500" />
             ) : (

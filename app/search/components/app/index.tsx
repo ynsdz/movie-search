@@ -33,6 +33,7 @@ type Props = {
 
 function App(props: Props) {
   const searchParams = useSearchParams();
+  const [pageNumber, setPageNumber] = useState<number>(1);
   const [searchValue, setSearchValue] = useState("");
   const [searchMovies, setSearchMovies] = useState<MovieSearchResult | null>(
     null
@@ -46,17 +47,17 @@ function App(props: Props) {
   const providerValue = {
     searchValue,
     setSearchValue,
+    pageNumber,
     movies: searchMovies,
     getMovie: async (id: string) => {
       const res = await fetch(
-        `http://www.omdbapi.com/?i=${id}&apikey=${props.apiKey}`
+        `http://www.omdbapi.com/?i=${id}&apikey=${props.apiKey}&page=${pageNumber}`
       );
       return res.json() as unknown as MovieSearchResult;
     },
     getMovies: async (searchValue: string) => {
-      // console.log("getmovies: ", searchValue);
       const res = await fetch(
-        `http://www.omdbapi.com/?s=${searchValue}&apikey=${props.apiKey}&page=1`
+        `http://www.omdbapi.com/?s=${searchValue}&apikey=${props.apiKey}&page=${pageNumber}`
       );
       return res.json() as unknown as MovieSearchResult;
     },
@@ -70,8 +71,7 @@ function App(props: Props) {
   };
 
   const getData = async () => {
-    console.log("searchvalue", searchValue);
-    providerValue.getAndSetMovies(searchValue.trim());
+    await providerValue.getAndSetMovies(searchValue.trim());
   };
   const debouncedGetData = useDebouncer(() => {
     getData();

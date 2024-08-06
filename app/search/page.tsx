@@ -12,7 +12,6 @@ export default async function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <App apiKey={process.env.API_KEY || ""} />
     </div>
   );

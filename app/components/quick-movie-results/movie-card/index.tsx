@@ -25,7 +25,7 @@ function MovieCard(props: Props) {
     _getMovie();
   }, [searchValue]);
 
-  // console.log("movie", movieDetail);
+  console.log("Movie Detay: ", movieDetail);
   const movie = { ...props.movie, ...movieDetail };
 
   const poster = (

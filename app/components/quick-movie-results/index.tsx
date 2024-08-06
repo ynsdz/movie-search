@@ -30,7 +30,7 @@ function Movies(props: Props) {
           href={{
             pathname: "search",
             query: {
-              title: searchValue,
+              searchKeyword: searchValue,
             },
           }}
           className="text-blue-500 py-4 px-8  block w-full text-center"
