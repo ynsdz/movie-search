@@ -6,6 +6,7 @@ import Movies from "../movies";
 import { useDebouncer } from "@/app/hooks/useDebouncer";
 import { useSearchParams } from "next/navigation";
 import ResultHeader from "../header";
+import Pagination from "@/app/components/pagination";
 
 type AppContextType = {
   searchValue?: string;
@@ -33,7 +34,7 @@ type Props = {
 
 function App(props: Props) {
   const searchParams = useSearchParams();
-  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [page, setPage] = useState<number>(1);
   const [searchValue, setSearchValue] = useState("");
   const [searchMovies, setSearchMovies] = useState<MovieSearchResult | null>(
     null
@@ -47,17 +48,17 @@ function App(props: Props) {
   const providerValue = {
     searchValue,
     setSearchValue,
-    pageNumber,
+    page,
     movies: searchMovies,
     getMovie: async (id: string) => {
       const res = await fetch(
-        `http://www.omdbapi.com/?i=${id}&apikey=${props.apiKey}&page=${pageNumber}`
+        `http://www.omdbapi.com/?i=${id}&apikey=${props.apiKey}&page=${page}`
       );
       return res.json() as unknown as MovieSearchResult;
     },
     getMovies: async (searchValue: string) => {
       const res = await fetch(
-        `http://www.omdbapi.com/?s=${searchValue}&apikey=${props.apiKey}&page=${pageNumber}`
+        `http://www.omdbapi.com/?s=${searchValue}&apikey=${props.apiKey}&page=${page}`
       );
       return res.json() as unknown as MovieSearchResult;
     },
@@ -81,13 +82,25 @@ function App(props: Props) {
     debouncedGetData();
   }, [searchValue]);
 
-  const movies = searchMovies?.Search || [];
+  useEffect(() => {
+    getData();
+  }, [page]);
 
+  const movies = searchMovies?.Search || [];
+  const moviesArrayLength = Number(searchMovies?.totalResults);
+  const totalPage = Math.ceil(moviesArrayLength / 10);
   return (
     <AppContext.Provider value={providerValue}>
       <main className="flex flex-col bg-[#F7F9FD] m-16 overflow-hidden ">
         <ResultHeader searchKeyword={searchValue} resultCount={movies.length} />
         <Movies movies={movies} />
+        <Pagination
+          hasPrev={page > 1}
+          hasNext={totalPage > 1 && page < totalPage}
+          currentPage={page}
+          setPage={setPage}
+          totalPage={totalPage}
+        />
       </main>
     </AppContext.Provider>
   );
