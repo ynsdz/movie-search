@@ -5,7 +5,7 @@ import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 import { MovieSearchResult, MovieSearchType } from "@/app/search/page";
 import { AppContext } from "../../app";
-import HighLighter from "../../../../hooks/getHighlight";
+import HighLighter from "@/app/components/highlighter";
 
 type Props = {
   isLastChild?: boolean;
