@@ -34,7 +34,7 @@ function MovieCard(props: Props) {
   // console.log("movie", movieDetail);
   const movie = { ...props.movie, ...movieDetail };
   const poster = (
-    <div className=" col-span-4">
+    <div className=" sm:col-span-4 col-span-12">
       {movie.Poster && movie.Poster !== "N/A" ? (
         <img
           src={movie.Poster}
@@ -111,9 +111,9 @@ function MovieCard(props: Props) {
 
   return (
     <div className={`relative ${props.isLastChild ? "" : "border-b"}`}>
-      <div className="grid h-full grid-cols-12 gap-x-3 flex-row sm:max-w-xl sm:mx-auto  content-center pb-8">
+      <div className="grid h-full grid-cols-12  gap-x-3 flex-row sm:max-w-xl sm:mx-auto  content-center pb-8">
         {poster}
-        <div className="col-span-8 card-right space-y-4">
+        <div className="col-span-12 sm:col-span-8 card-right space-y-4">
           {header}
           {cardMain}
           {cardBottom}
