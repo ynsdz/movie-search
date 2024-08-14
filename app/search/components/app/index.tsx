@@ -9,7 +9,7 @@ import ResultHeader from "../header";
 import Pagination from "@/app/components/pagination";
 
 type AppContextType = {
-  searchValue?: string;
+  searchValue: string;
   setSearchValue?: any;
   getMovie: (id: string) => Promise<MovieSearchResult>;
   getMovies: (searchValue: string) => Promise<MovieSearchResult>;
@@ -17,6 +17,7 @@ type AppContextType = {
 
 const AppContextInitialValue = {
   setSearchValue: (value: string) => {},
+  searchValue: "",
   getMovie: async (id: string) => {
     return {} as MovieSearchResult;
   },
@@ -94,13 +95,15 @@ function App(props: Props) {
       <main className="flex flex-col bg-[#F7F9FD] m-16 overflow-hidden ">
         <ResultHeader searchKeyword={searchValue} resultCount={movies.length} />
         <Movies movies={movies} />
-        <Pagination
-          hasPrev={page > 1}
-          hasNext={totalPage > 1 && page < totalPage}
-          currentPage={page}
-          setPage={setPage}
-          totalPage={totalPage}
-        />
+        <div className="flex justify-center mb-4">
+          <Pagination
+            hasPrev={page > 1}
+            hasNext={totalPage > 1 && page < totalPage}
+            currentPage={page}
+            setPage={setPage}
+            totalPage={totalPage}
+          />
+        </div>
       </main>
     </AppContext.Provider>
   );
