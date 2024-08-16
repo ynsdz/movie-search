@@ -10,14 +10,10 @@ import HighLighter from "@/app/components/highlighter";
 type Props = {
   isLastChild?: boolean;
   movie: MovieSearchType;
+  ref: any;
 };
 
-const makeBold = (item: any, keyword: any) => {
-  var re = new RegExp(keyword, "m");
-  return item.replace(re, "<i>" + keyword + "</i>");
-};
-
-function MovieCard(props: Props) {
+const MovieCard = React.forwardRef<Props, any>((props, ref) => {
   const { getMovie, searchValue } = useContext(AppContext);
   const [movieDetail, setMovieDetail] = useState<null | MovieSearchResult>(
     null
@@ -121,6 +117,6 @@ function MovieCard(props: Props) {
       </div>
     </div>
   );
-}
+});
 
 export default MovieCard;

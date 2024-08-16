@@ -77,10 +77,8 @@ function App(props: Props) {
       <section className="m-8 bg-[#F7F9FD] p-12 ">
         <main className="flex flex-col max-w-[570px] mx-auto">
           <InputBar />
-          {searchMovies?.Search ? (
+          {!!searchMovies?.Search && (
             <QuickMovieResults movies={searchMovies?.Search || []} />
-          ) : (
-            <></>
           )}
         </main>
       </section>
