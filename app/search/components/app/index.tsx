@@ -7,7 +7,6 @@ import { useDebouncer } from "@/app/hooks/useDebouncer";
 import { useSearchParams } from "next/navigation";
 import ResultHeader from "../header";
 import Pagination from "@/app/components/pagination";
-import infiniteveScroll from "@/app/components/infiniteve-scroll";
 
 type AppContextType = {
   searchValue: string;
@@ -108,7 +107,10 @@ function App(props: Props) {
   return (
     <AppContext.Provider value={providerValue}>
       <main className="flex flex-col bg-[#F7F9FD] m-16 overflow-hidden ">
-        <ResultHeader searchKeyword={searchValue} resultCount={movies.length} />
+        <ResultHeader
+          searchKeyword={searchValue}
+          resultCount={moviesArrayLength}
+        />
         <Movies
           movies={movies}
           currentPage={page}
