@@ -1,14 +1,44 @@
 "use client";
 
-import React from "react";
-import { MovieSearchResult, MovieSearchType } from "@/app/search/page";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { MovieSearchResult } from "@/app/search/page";
 import MovieCard from "./movie-card";
+// import infiniteveScroll from "@/app/components/infiniteve-scroll";
 
 type Props = {
   movies: MovieSearchResult["Search"];
+  currentPage: number;
+  totalPage: number;
+  setPage: (page: number) => void;
 };
 
 function Movies(props: Props) {
+  const { currentPage, setPage } = props;
+  const [loading, setLoading] = useState(false);
+  const loaderRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const target = entries[0];
+      if (target.isIntersecting) {
+        if (!props.movies.length) {
+          return;
+        }
+        setPage(currentPage + 1);
+      }
+    });
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [props.movies]);
+
   const moviesArrayLength = props.movies.length;
   return (
     <div>
@@ -23,6 +53,7 @@ function Movies(props: Props) {
           />
         ))}
       </ul>
+
       <footer className="border-t flex justify-center align-center">
         <button
           className="text-blue-500 py-4 px-8  block w-full text-center "
@@ -37,6 +68,7 @@ function Movies(props: Props) {
           Basa Don
         </button>
       </footer>
+      <div ref={loaderRef}>{loading && "..loading"}</div>
     </div>
   );
 }

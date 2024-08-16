@@ -5,19 +5,15 @@ import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 import { MovieSearchResult, MovieSearchType } from "@/app/search/page";
 import { AppContext } from "../../app";
-import HighLighter from "../../../../hooks/getHighlight";
+import HighLighter from "@/app/components/highlighter";
 
 type Props = {
   isLastChild?: boolean;
   movie: MovieSearchType;
+  ref: any;
 };
 
-const makeBold = (item: any, keyword: any) => {
-  var re = new RegExp(keyword, "m");
-  return item.replace(re, "<i>" + keyword + "</i>");
-};
-
-function MovieCard(props: Props) {
+const MovieCard = React.forwardRef<Props, any>((props, ref) => {
   const { getMovie, searchValue } = useContext(AppContext);
   const [movieDetail, setMovieDetail] = useState<null | MovieSearchResult>(
     null
@@ -34,7 +30,7 @@ function MovieCard(props: Props) {
   // console.log("movie", movieDetail);
   const movie = { ...props.movie, ...movieDetail };
   const poster = (
-    <div className=" col-span-4">
+    <div className=" sm:col-span-4 col-span-12">
       {movie.Poster && movie.Poster !== "N/A" ? (
         <img
           src={movie.Poster}
@@ -111,9 +107,9 @@ function MovieCard(props: Props) {
 
   return (
     <div className={`relative ${props.isLastChild ? "" : "border-b"}`}>
-      <div className="grid h-full grid-cols-12 gap-x-3 flex-row sm:max-w-xl sm:mx-auto  content-center pb-8">
+      <div className="grid h-full grid-cols-12  gap-x-3 flex-row sm:max-w-xl sm:mx-auto  content-center pb-8">
         {poster}
-        <div className="col-span-8 card-right space-y-4">
+        <div className="col-span-12 sm:col-span-8 card-right space-y-4">
           {header}
           {cardMain}
           {cardBottom}
@@ -121,32 +117,6 @@ function MovieCard(props: Props) {
       </div>
     </div>
   );
-}
+});
 
 export default MovieCard;
-
-/**
- 
-
-function getHighlightedText(text: string, highlight: string) {
-  // Split on highlight term and include term into parts, ignore case
-  const parts = text.split(new RegExp(`(${highlight})`, "gi"));
-  return (
-    <span>
-      {" "}
-      {parts.map((part, i) => (
-        <span
-          key={i}
-          style={
-            part.toLowerCase() === highlight.toLowerCase()
-              ? { fontWeight: "bold" }
-              : {}
-          }
-        >
-          {part}
-        </span>
-      ))}{" "}
-    </span>
-  );
-}
- */

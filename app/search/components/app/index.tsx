@@ -7,6 +7,7 @@ import { useDebouncer } from "@/app/hooks/useDebouncer";
 import { useSearchParams } from "next/navigation";
 import ResultHeader from "../header";
 import Pagination from "@/app/components/pagination";
+import infiniteveScroll from "@/app/components/infiniteve-scroll";
 
 type AppContextType = {
   searchValue: string;
@@ -32,6 +33,8 @@ export const AppContext = createContext<AppContextType>(AppContextInitialValue);
 type Props = {
   apiKey: string;
 };
+
+const PAGINATION_TYPE = "infiniteScroll";
 
 function App(props: Props) {
   const searchParams = useSearchParams();
@@ -68,7 +71,19 @@ function App(props: Props) {
     },
     getAndSetMovies: async (searchValue: string) => {
       const movies = await providerValue.getMovies(searchValue);
-      providerValue.setMovies(movies);
+      if (!movies.Search) return;
+      console.log("movies search", movies.Search);
+      if (PAGINATION_TYPE === "infiniteScroll") {
+        const search = [...(searchMovies?.Search || []), ...movies.Search];
+        console.log({ search });
+        providerValue.setMovies({
+          totalResults: movies.totalResults,
+          Response: movies.Response,
+          Search: search,
+        });
+      } else {
+        providerValue.setMovies(movies);
+      }
     },
   };
 
@@ -94,7 +109,12 @@ function App(props: Props) {
     <AppContext.Provider value={providerValue}>
       <main className="flex flex-col bg-[#F7F9FD] m-16 overflow-hidden ">
         <ResultHeader searchKeyword={searchValue} resultCount={movies.length} />
-        <Movies movies={movies} />
+        <Movies
+          movies={movies}
+          currentPage={page}
+          setPage={setPage}
+          totalPage={totalPage}
+        />
         <div className="flex justify-center mb-4">
           <Pagination
             hasPrev={page > 1}
