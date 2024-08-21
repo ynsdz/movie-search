@@ -10,7 +10,7 @@ function InputBar() {
   const router = useRouter();
 
   return (
-    <div className="flex justify-center mb-8 items-center">
+    <div className="flex justify-center mb-8 items-center ">
       <form
         className="relative w-full"
         onSubmit={(e) => {
@@ -25,7 +25,7 @@ function InputBar() {
           onChange={(e) => {
             setSearchValue(e.target.value);
           }}
-          placeholder="Bir film adi giriniz"
+          placeholder="Bulmak istedigin filmini adini yaz"
           aria-label="Search"
         />
         <div
@@ -35,9 +35,9 @@ function InputBar() {
         >
           <button type="submit" className="cursor-pointer">
             {searchValue ? (
-              <GoArrowRight className="fill-sky-500  pointer-events-auto" />
+              <GoArrowRight className="fill-blue-500 pointer-events-auto md:h-12 md:w-14 h-4 w-6" />
             ) : (
-              <CiSearch id="button-addon3 " className="fill-sky-500 " />
+              <CiSearch className="fill-blue-500 md:h-12 md:w-12 h-6 w-6" />
             )}
           </button>
         </div>

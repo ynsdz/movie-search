@@ -29,7 +29,7 @@ function MovieCard(props: Props) {
   const movie = { ...props.movie, ...movieDetail };
 
   const poster = (
-    <div className=" col-span-4">
+    <div className=" col-span-12 sm:col-span-4">
       <img
         src={movie.Poster}
         alt={`${movie.Title} broken image`}
@@ -84,9 +84,9 @@ function MovieCard(props: Props) {
 
   return (
     <div className={`relative ${props.isLastChild ? "" : "border-b"}`}>
-      <div className="grid h-full grid-cols-12 gap-x-3 flex-row sm:max-w-xl sm:mx-auto  content-center pb-8">
+      <div className="grid h-full grid-cols-12 gap-x-3 flex-row sm:max-w-xl sm:mx-auto content-center pb-8 overflow-x-auto">
         {poster}
-        <div className="col-span-8 card-right space-y-4">
+        <div className="col-span-12 sm:col-span-8 card-right space-y-4 ">
           {header}
           {cardMain}
           {cardBottom}

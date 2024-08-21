@@ -1,7 +1,7 @@
 "use client";
 
 import { MovieSearchResult } from "@/app/search/page";
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useRef } from "react";
 import Movies from "../movies";
 import { useDebouncer } from "@/app/hooks/useDebouncer";
 import { useSearchParams } from "next/navigation";
@@ -34,8 +34,10 @@ type Props = {
 };
 
 const PAGINATION_TYPE = "infiniteScroll";
+// const PAGINATION_TYPE = "";
 
 function App(props: Props) {
+  const isFirstRender = useRef(true);
   const searchParams = useSearchParams();
   const [page, setPage] = useState<number>(1);
   const [searchValue, setSearchValue] = useState("");
@@ -94,7 +96,12 @@ function App(props: Props) {
   }, 300);
 
   useEffect(() => {
-    debouncedGetData();
+    console.log(isFirstRender);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      debouncedGetData();
+    }
   }, [searchValue]);
 
   useEffect(() => {

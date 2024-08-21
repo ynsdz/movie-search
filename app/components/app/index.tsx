@@ -1,7 +1,7 @@
 "use client";
 
 import { MovieSearchResult, MovieSearchType } from "@/app/search/page";
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useRef } from "react";
 import InputBar from "../input";
 import QuickMovieResults from "../quick-movie-results";
 import { useDebouncer } from "@/app/hooks/useDebouncer";
@@ -31,6 +31,7 @@ type Props = {
 };
 
 function App(props: Props) {
+  const isFirstRender = useRef(true);
   const [searchValue, setSearchValue] = useState("");
   const [searchMovies, setSearchMovies] = useState<MovieSearchResult | null>(
     null
@@ -67,19 +68,30 @@ function App(props: Props) {
   };
   const debouncedGetData = useDebouncer(() => {
     getData();
-  }, 300);
+  }, 400);
 
   useEffect(() => {
-    debouncedGetData();
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      debouncedGetData();
+    }
   }, [searchValue]);
+
+  const movies = searchMovies?.Search;
+
   return (
     <AppContext.Provider value={providerValue}>
-      <section className="m-8 bg-[#F7F9FD] p-12 ">
-        <main className="flex flex-col max-w-[570px] mx-auto">
-          <InputBar />
-          {!!searchMovies?.Search && (
-            <QuickMovieResults movies={searchMovies?.Search || []} />
-          )}
+      <section
+        className={`h-[calc(100vh-4rem)] overflow-auto flex m-8 bg-[#F7F9FD] p-12 transition-transform ${
+          movies?.length ? "items-start" : "items-center"
+        }`}
+      >
+        <main className="flex flex-col max-w-[570px] mx-auto w-full">
+          <div>
+            <InputBar />
+          </div>
+          {!!movies && <QuickMovieResults movies={movies || []} />}
         </main>
       </section>
     </AppContext.Provider>

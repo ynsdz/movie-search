@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MovieSearchResult } from "@/app/search/page";
 import MovieCard from "./movie-card";
-// import infiniteveScroll from "@/app/components/infiniteve-scroll";
 
 type Props = {
   movies: MovieSearchResult["Search"];
@@ -42,7 +41,7 @@ function Movies(props: Props) {
   const moviesArrayLength = props.movies.length;
   return (
     <div>
-      <ul className="grid grid-cols-1 gap-14 lg:grid-cols-2">
+      <ul className="grid grid-cols-1 gap-14 lg:grid-cols-2 mx-8">
         {props.movies?.map((movie, index) => (
           <MovieCard
             key={movie.imdbID}
@@ -68,7 +67,7 @@ function Movies(props: Props) {
           Basa Don
         </button>
       </footer>
-      <div ref={loaderRef}>{loading && "..loading"}</div>
+      {/* <div ref={loaderRef}>{loading && "..loading"}</div> */}
     </div>
   );
 }
