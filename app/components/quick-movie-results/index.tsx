@@ -13,7 +13,7 @@ type Props = {
 function Movies(props: Props) {
   const movies = props.movies.slice(0, 2);
   return (
-    <div className="max-w-[570px] bg-white rounded-lg pt-8 shadow ">
+    <div className="bg-white rounded-lg pt-8 shadow ">
       <RenderMovies movies={movies} />
       <Footer />
     </div>

@@ -87,7 +87,7 @@ function App(props: Props) {
           movies?.length ? "items-start" : "items-center"
         }`}
       >
-        <main className="flex flex-col max-w-[570px] mx-auto w-full">
+        <main className="flex flex-col max-w-[570px] xl:max-w-full xl:w-1/2 mx-auto w-full">
           <div>
             <InputBar />
           </div>
